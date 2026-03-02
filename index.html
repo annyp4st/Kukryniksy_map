@@ -7,12 +7,12 @@
     <!-- Leaflet (OpenStreetMap) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Шрифты -->
+    <!-- Шрифты: военная тематика -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cormorant+Garamond:wght@400;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <style>
-        /* ==================== ОСНОВНЫЕ СТИЛИ ==================== */
+        /* ==================== СТИЛЬ ВОЕННОГО АЛЬБОМА ==================== */
         * {
             margin: 0;
             padding: 0;
@@ -20,53 +20,57 @@
         }
         body {
             font-family: 'PT Serif', 'Times New Roman', serif;
-            background: #4a2c1a; /* тёмный фон под дерево */
+            background: #2e1e0e; /* тёмный фон, как старая кожа */
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 12px;
+            background-image: 
+                linear-gradient(45deg, rgba(70, 40, 20, 0.3) 0%, transparent 30%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="1"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.1 0"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.15"/></svg>');
         }
         .book {
             width: 100%;
             max-width: 1600px;
             height: calc(100vh - 24px);
-            background: #f2e5d0;
+            background: #e8d9c0; /* старая бумага */
             background-image: 
-                linear-gradient(145deg, rgba(200,180,150,0.1) 0%, transparent 20%),
-                repeating-linear-gradient(45deg, rgba(150,130,100,0.02) 0px, rgba(150,130,100,0.02) 2px, transparent 2px, transparent 6px);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.5), inset 0 0 0 1px #e5d5b5, inset 0 0 20px #dac29c;
-            border-radius: 8px;
+                linear-gradient(145deg, rgba(180, 150, 110, 0.1) 0%, transparent 20%),
+                repeating-linear-gradient(45deg, rgba(130, 100, 70, 0.03) 0px, rgba(130, 100, 70, 0.03) 2px, transparent 2px, transparent 6px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.7), inset 0 0 0 1px #c8b190, inset 0 0 30px #b3926e;
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
             position: relative;
+            border: 1px solid #aa7f58;
         }
         .book::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 8px;
-            box-shadow: inset 0 0 30px #ac9e8b, inset 0 0 15px #6b5e4e;
+            border-radius: 12px;
+            box-shadow: inset 0 0 40px #7a623e, inset 0 0 15px #3d2e1d;
             pointer-events: none;
             z-index: 5;
         }
-        /* Шапка */
+        /* Шапка с эффектом старого заголовка */
         .header {
-            background: rgba(235, 220, 195, 0.7);
+            background: rgba(210, 180, 140, 0.6);
             backdrop-filter: blur(2px);
             padding: 18px 28px;
-            border-bottom: 2px solid #b6a68b;
-            box-shadow: 0 4px 8px rgba(100, 70, 40, 0.2);
+            border-bottom: 3px solid #9e6b3e;
+            box-shadow: 0 4px 12px rgba(70, 40, 20, 0.3);
             position: relative;
             z-index: 10;
         }
         .header h1 {
             font-family: 'Cormorant Garamond', 'Georgia', serif;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 700;
-            color: #3e2e1f;
-            text-shadow: 1px 1px 2px rgba(255,245,220,0.8);
+            color: #3a281a;
+            text-shadow: 2px 2px 0 #c9a87c, 3px 3px 0 #886b44;
             letter-spacing: 2px;
             margin-bottom: 4px;
             display: flex;
@@ -75,18 +79,19 @@
         }
         .header h1 span {
             font-family: 'Caveat', cursive;
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin-left: 20px;
             color: #9e2b2b;
-            font-weight: 400;
+            text-shadow: 1px 1px 0 #ffdd99;
+            font-weight: 500;
         }
         .header p {
             font-family: 'Caveat', cursive;
-            font-size: 1.2rem;
-            color: #5f4a33;
-            border-left: 3px solid #ab8b64;
-            padding-left: 16px;
-            margin-top: 6px;
+            font-size: 1.3rem;
+            color: #4f3a28;
+            border-left: 4px solid #b27a4a;
+            padding-left: 20px;
+            margin-top: 8px;
         }
         /* Основная часть */
         .main {
@@ -96,105 +101,107 @@
             position: relative;
             z-index: 2;
         }
-        /* Левая колонка — список мест */
+        /* Левая колонка — винтажный список */
         .sidebar {
-            width: 280px;
-            background: rgba(240, 230, 210, 0.6);
+            width: 300px;
+            background: rgba(205, 175, 135, 0.5);
             backdrop-filter: blur(2px);
-            border-right: 2px solid #cbb99b;
+            border-right: 3px solid #b58a5c;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: inset -2px 0 8px rgba(140, 110, 70, 0.2);
+            box-shadow: inset -2px 0 10px rgba(100, 60, 30, 0.3);
         }
         .sidebar h2 {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             padding: 24px 20px 12px;
-            color: #3f2f1d;
-            border-bottom: 1px dashed #bda78b;
+            color: #2d1f12;
+            border-bottom: 2px dashed #a77a4e;
             margin-bottom: 8px;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
+            text-align: center;
         }
         .places-list {
             list-style: none;
             padding: 8px 16px 20px;
             overflow-y: auto;
             scrollbar-width: thin;
-            scrollbar-color: #aa8f72 #e5d5be;
+            scrollbar-color: #a57246 #dbbc95;
         }
         .places-list li {
             font-family: 'PT Serif', serif;
-            font-size: 0.95rem;
-            padding: 14px 18px;
-            margin-bottom: 10px;
-            background: #faf1df;
-            border-radius: 30px 8px 8px 30px;
-            box-shadow: 0 3px 6px rgba(110, 70, 30, 0.15);
+            font-size: 1rem;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            background: #f5e2cc;
+            border-radius: 30px 10px 10px 30px;
+            box-shadow: 0 5px 10px rgba(80, 50, 20, 0.3), inset 0 1px 3px #ffeaca;
             cursor: pointer;
             transition: all 0.2s;
-            border-left: 6px solid #ab8e6a;
+            border-left: 8px solid #b87e4e;
             font-weight: 600;
             color: #2f2419;
-            border-bottom: 1px solid #dccbb2;
+            border-bottom: 1px solid #cb9f73;
         }
         .places-list li:hover {
-            background: #efdecb;
-            border-left-width: 10px;
-            border-left-color: #7c5d3e;
-            transform: translateX(5px);
-            box-shadow: 0 6px 12px rgba(80, 50, 20, 0.2);
+            background: #ecd5b5;
+            border-left-width: 12px;
+            border-left-color: #8b5a2e;
+            transform: translateX(6px);
+            box-shadow: 0 8px 16px rgba(60, 30, 10, 0.3);
         }
         .places-list li.active {
-            border-left-color: #3e2a16;
-            background: #e1cfb5;
+            border-left-color: #4a2a14;
+            background: #dbbd9c;
             font-weight: 700;
-            box-shadow: inset 0 0 0 1px #c9af8b;
+            box-shadow: inset 0 0 0 2px #b98f63;
         }
-        /* Центр — карта */
+        /* Центр — карта со стилизацией */
         .map-container {
             flex: 1;
             position: relative;
-            border-left: 1px solid #cbb48e;
-            border-right: 1px solid #cbb48e;
-            background: #ddd2c0;
+            border-left: 2px solid #ba8d5b;
+            border-right: 2px solid #ba8d5b;
+            background: #c7b194;
         }
         #map {
             width: 100%;
             height: 100%;
-            filter: sepia(0.2) contrast(0.95);
+            filter: sepia(0.4) contrast(0.9) brightness(0.95);
         }
-        /* Правая колонка — информация */
+        /* Правая колонка — антикварная панель */
         .info-panel {
-            width: 360px;
-            background: rgba(245, 235, 215, 0.85);
-            backdrop-filter: blur(2px);
-            border-left: 2px solid #cbb99b;
+            width: 380px;
+            background: rgba(230, 205, 170, 0.85);
+            backdrop-filter: blur(3px);
+            border-left: 3px solid #b58a5c;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: inset 2px 0 8px rgba(140, 110, 70, 0.15);
+            box-shadow: inset 2px 0 10px rgba(100, 60, 30, 0.2);
         }
         .info-header {
             padding: 22px 22px 12px;
-            border-bottom: 2px solid #cfbda2;
-            background: rgba(225, 205, 175, 0.3);
+            border-bottom: 3px solid #c89f6e;
+            background: rgba(190, 150, 110, 0.3);
         }
         .info-header h3 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: #3e2b18;
+            color: #2b1c0f;
             line-height: 1.3;
             margin-bottom: 6px;
+            text-shadow: 1px 1px 0 #ebcba0;
         }
         .info-header .place-sub {
             font-family: 'Caveat', cursive;
-            font-size: 1.2rem;
-            color: #745f45;
-            border-top: 1px dotted #bb9f80;
+            font-size: 1.3rem;
+            color: #6b4d32;
+            border-top: 2px dotted #b4875a;
             padding-top: 8px;
         }
         .info-content {
@@ -202,22 +209,22 @@
             overflow-y: auto;
             flex: 1;
             scrollbar-width: thin;
-            scrollbar-color: #aa8f72 #ecdbbd;
+            scrollbar-color: #a57246 #e4cbb0;
         }
         .info-content::-webkit-scrollbar {
             width: 8px;
         }
         .info-content::-webkit-scrollbar-track {
-            background: #ecdbbd;
+            background: #e4cbb0;
         }
         .info-content::-webkit-scrollbar-thumb {
-            background: #aa8f72;
+            background: #a57246;
             border-radius: 8px;
         }
-        /* Галерея */
+        /* Галерея с винтажными рамками */
         .photo-gallery {
             display: flex;
-            gap: 16px;
+            gap: 18px;
             overflow-x: auto;
             padding: 12px 0 16px;
             margin-bottom: 16px;
@@ -227,220 +234,229 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 140px;
-            max-width: 180px;
+            min-width: 150px;
+            max-width: 190px;
             cursor: pointer;
             transition: transform 0.2s;
         }
         .photo-item:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px);
         }
         .photo-item img {
-            height: 110px;
+            height: 120px;
             width: auto;
-            border-radius: 4px;
-            box-shadow: 0 8px 15px rgba(60, 40, 20, 0.3), 0 0 0 1px #bea887, 0 0 0 3px #f3e9d2;
+            border-radius: 6px;
+            box-shadow: 0 10px 18px rgba(40, 20, 5, 0.4), 0 0 0 2px #b38a5c, 0 0 0 5px #f3e2cd;
             object-fit: cover;
             transition: box-shadow 0.2s;
-            background: #fff9ea;
-            padding: 4px 4px 8px 4px;
-            margin-bottom: 4px;
+            background: #f7ead7;
+            padding: 5px 5px 8px 5px;
+            margin-bottom: 6px;
         }
         .photo-item:hover img {
-            box-shadow: 0 12px 20px rgba(40, 25, 10, 0.4), 0 0 0 1px #a4835a, 0 0 0 4px #e7d7bb;
+            box-shadow: 0 14px 22px rgba(30, 15, 0, 0.5), 0 0 0 2px #a57246, 0 0 0 6px #ebd6bb;
         }
         .photo-caption {
             font-family: 'Caveat', cursive;
-            font-size: 0.85rem;
-            color: #5f4a33;
+            font-size: 0.9rem;
+            color: #543f2c;
             text-align: center;
             padding: 6px 8px;
-            background: rgba(245, 235, 215, 0.9);
-            border-radius: 20px;
+            background: rgba(245, 230, 205, 0.9);
+            border-radius: 30px;
             margin-top: 4px;
             max-width: 100%;
             white-space: normal;
             line-height: 1.3;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            border: 1px solid #dac09f;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            border: 1px solid #c69c6d;
             font-weight: 500;
-            width: 100%;
         }
         .place-fulltext {
             font-family: 'PT Serif', serif;
             font-size: 0.98rem;
             line-height: 1.8;
-            color: #2f261c;
-            background: rgba(250, 242, 225, 0.7);
+            color: #2a1e14;
+            background: rgba(245, 235, 215, 0.6);
             padding: 22px 22px;
-            border-radius: 2px 20px 2px 20px;
+            border-radius: 4px 30px 4px 30px;
             margin: 16px 0 20px;
-            box-shadow: inset 0 0 0 1px #e4cfb2, inset 0 0 20px #eee1cd, 0 6px 12px rgba(80, 50, 30, 0.1);
+            box-shadow: inset 0 0 0 1px #dbb894, inset 0 0 20px #f0dbc0, 0 8px 16px rgba(70, 40, 20, 0.2);
             white-space: pre-line;
-            border-left: 4px solid #ab8c66;
-            border-bottom: 2px solid #dac09f;
-            text-indent: 1.5em;
+            border-left: 5px solid #b87e4e;
+            border-bottom: 2px solid #caa177;
+        }
+        /* Интересные факты выделены */
+        .interesting-fact {
+            font-family: 'Caveat', cursive;
+            font-size: 1.1rem;
+            background: #dac09f;
+            color: #2d1f12;
+            padding: 10px 18px;
+            border-radius: 40px 8px 40px 8px;
+            margin: 12px 0;
+            border-left: 6px solid #9e2b2b;
+            box-shadow: 0 4px 8px rgba(100, 60, 30, 0.3);
+            display: inline-block;
+            font-weight: 500;
         }
         .footer-note {
             font-family: 'Caveat', cursive;
             text-align: center;
-            font-size: 1rem;
-            color: #6f5540;
-            padding: 12px 0;
-            border-top: 2px solid #d6bc99;
-            background: rgba(215, 190, 160, 0.2);
+            font-size: 1.1rem;
+            color: #5a3e28;
+            padding: 14px 0;
+            border-top: 3px solid #cb9f73;
+            background: rgba(180, 140, 100, 0.15);
             letter-spacing: 1px;
-            box-shadow: inset 0 4px 6px -4px #b29675;
+            box-shadow: inset 0 4px 6px -4px #906d47;
         }
-        /* Глобальный плеер */
+        /* Глобальный плеер — стилизация под старый радиоприёмник */
         .global-player {
             position: fixed;
             bottom: 25px;
             right: 25px;
-            background: rgba(245, 235, 215, 0.95);
-            backdrop-filter: blur(8px);
-            border: 2px solid #bea383;
-            border-radius: 60px;
-            padding: 8px 18px 8px 12px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 1px 4px #fff3e0;
+            background: #6b4f34; /* тёмное дерево */
+            border: 4px solid #b58a5c;
+            border-radius: 50px;
+            padding: 8px 20px 8px 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 0 2px #e5c9a8;
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
             z-index: 2000;
             font-family: 'PT Serif', serif;
-            max-width: 360px;
+            max-width: 400px;
             transition: all 0.2s;
+            color: #f2e0c5;
         }
         .global-player button {
-            background: #8b6f50;
-            border: none;
-            color: #fbf3e0;
-            width: 44px;
-            height: 44px;
+            background: #9e6b3e;
+            border: 3px solid #dbb58b;
+            color: #fff4e0;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            font-size: 24px;
+            font-size: 26px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 4px #dcc09f;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.4), inset 0 2px 4px #fbe1c0;
             transition: all 0.2s;
             flex-shrink: 0;
-            border: 1px solid #dbb78c;
         }
         .global-player button:hover {
-            background: #6b4f34;
+            background: #7b512f;
             transform: scale(1.05);
         }
         .global-player .track-info {
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            color: #2f2419;
-            font-size: 0.95rem;
+            color: #f2dbb8;
+            font-size: 1rem;
             line-height: 1.3;
             min-width: 0;
+            text-shadow: 1px 1px 0 #2e1e0e;
         }
         .global-player .track-name {
             font-weight: 700;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
         .global-player .track-time {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-family: monospace;
-            color: #5f4a33;
+            color: #e5c49e;
         }
-        /* Лайтбокс */
+        /* Лайтбокс с военным акцентом */
         .lightbox {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(20, 10, 5, 0.95);
             z-index: 3000;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             padding: 20px;
         }
-        .lightbox.active {
-            display: flex;
-        }
+        .lightbox.active { display: flex; }
         .lightbox-content {
-            max-width: 90vw;
-            max-height: 80vh;
+            max-width: 90vw; max-height: 80vh;
             object-fit: contain;
-            border: 4px solid #fbf3e0;
-            box-shadow: 0 0 30px rgba(0,0,0,0.7);
-            background: #fbf3e0;
-            padding: 8px 8px 16px 8px;
-            border-radius: 4px;
+            border: 6px solid #b87e4e;
+            box-shadow: 0 0 40px #3d2e1d;
+            background: #efdecb;
+            padding: 10px 10px 18px 10px;
+            border-radius: 8px;
         }
         .lightbox-caption {
             font-family: 'Caveat', cursive;
-            font-size: 1.3rem;
-            color: #fbf3e0;
-            margin-top: 16px;
+            font-size: 1.5rem;
+            color: #f2dbb8;
+            margin-top: 20px;
             text-align: center;
             max-width: 80%;
-            background: rgba(60, 40, 20, 0.6);
-            padding: 8px 20px;
-            border-radius: 40px;
-            backdrop-filter: blur(4px);
-            border: 1px solid #dac09f;
+            background: rgba(50, 30, 15, 0.8);
+            padding: 10px 25px;
+            border-radius: 50px;
+            border: 2px solid #c69c6d;
+        }
+        .lightbox-close, .lightbox-nav {
+            position: absolute;
+            color: #f2dbb8;
+            background: rgba(90, 60, 30, 0.7);
+            border: 2px solid #b87e4e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
         }
         .lightbox-close {
-            position: absolute;
-            top: 30px;
-            right: 40px;
+            top: 30px; right: 40px;
             font-size: 40px;
-            color: #fbf3e0;
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(60, 40, 20, 0.5);
-            border-radius: 50%;
-            border: 2px solid #dac09f;
-            transition: all 0.3s;
-            z-index: 3010;
+            width: 50px; height: 50px;
         }
-        .lightbox-close:hover {
-            background: rgba(139, 69, 19, 0.8);
-            transform: scale(1.1);
-        }
+        .lightbox-close:hover { background: #9e6b3e; transform: scale(1.1); }
         .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 50%; transform: translateY(-50%);
             font-size: 50px;
-            color: #fbf3e0;
-            cursor: pointer;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(60, 40, 20, 0.5);
-            border-radius: 50%;
-            border: 2px solid #dac09f;
-            transition: all 0.3s;
-            user-select: none;
-            z-index: 3010;
-        }
-        .lightbox-nav:hover {
-            background: rgba(139, 69, 19, 0.8);
-            transform: translateY(-50%) scale(1.1);
+            width: 60px; height: 60px;
         }
         .lightbox-nav.prev { left: 30px; }
         .lightbox-nav.next { right: 30px; }
+        .lightbox-nav:hover { background: #9e6b3e; transform: translateY(-50%) scale(1.1); }
+        @media (max-width: 900px) {
+            .lightbox-nav { font-size: 30px; width: 40px; height: 40px; }
+            .lightbox-close { top: 15px; right: 20px; font-size: 30px; width: 40px; height: 40px; }
+        }
+
+        /* Мотивирующий блок со звёздами (появится после завершения) */
+        .stars-motivation {
+            margin: 20px 0;
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .stars-row {
+            font-size: 3rem;
+            letter-spacing: 10px;
+        }
+        .star-filled { color: #FFD700; text-shadow: 0 0 10px #FFA500, 0 0 20px #FFD700; animation: glow 1.5s infinite alternate; }
+        @keyframes glow { from { text-shadow: 0 0 5px #FFD700; } to { text-shadow: 0 0 20px #FFA500, 0 0 30px #FFD700; } }
+        .star-empty { color: #aaa; text-shadow: 0 0 5px #666; }
+        .motivation-text {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: #9e2b2b;
+            margin-top: 10px;
+        }
+
         /* Мобильная адаптация */
         @media (max-width: 900px) {
             body { padding: 0; }
@@ -448,72 +464,43 @@
             .header { padding: 10px 20px; }
             .header h1 { font-size: 1.8rem; }
             .header h1 span { font-size: 1.5rem; margin-left: 10px; }
-            .header p { font-size: 1rem; }
-            .global-player {
-                bottom: 5px; right: 20px; left: 20px;
-                max-width: none; justify-content: space-between;
-                padding: 6px 14px; border-radius: 50px;
-                background: rgba(245, 235, 215, 0.98);
-            }
-            .global-player button { width: 44px; height: 44px; font-size: 24px; }
-            .main { flex-direction: column; position: relative; }
+            .header p { font-size: 1.1rem; }
+            .global-player { bottom: 5px; right: 20px; left: 20px; max-width: none; }
+            .main { flex-direction: column; }
             .map-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; }
             .sidebar {
-                position: absolute; top: 16px; left: 16px; right: 16px;
-                width: auto; background: rgba(245, 235, 215, 0.95);
-                backdrop-filter: blur(10px); border-radius: 40px;
-                border: 2px solid #cbb99b; z-index: 20;
-                max-height: 60px; overflow: hidden;
-                transition: max-height 0.3s ease;
+                position: absolute; top: 16px; left: 16px; right: 16px; width: auto;
+                background: rgba(220, 190, 150, 0.95); backdrop-filter: blur(10px);
+                border-radius: 40px; border: 3px solid #b58a5c; z-index: 20;
+                max-height: 70px; overflow: hidden; transition: max-height 0.3s ease;
             }
             .sidebar.expanded { max-height: 400px; border-radius: 24px; padding-bottom: 16px; }
-            .sidebar h2 { padding: 16px 20px; margin: 0; cursor: pointer; font-size: 1.2rem; position: relative; }
-            .sidebar h2::after { content: '▼'; position: absolute; right: 20px; top: 16px; font-size: 0.8rem; transition: transform 0.3s; }
+            .sidebar h2 { padding: 20px 20px; margin: 0; cursor: pointer; font-size: 1.3rem; position: relative; }
+            .sidebar h2::after { content: '▼'; position: absolute; right: 20px; top: 20px; font-size: 0.9rem; transition: transform 0.3s; }
             .sidebar.expanded h2::after { transform: rotate(180deg); }
             .places-list { display: block; padding: 0 16px 16px; max-height: 300px; overflow-y: auto; }
             .info-panel {
                 position: absolute; bottom: 0; left: 0; right: 0; width: 100%;
-                max-height: 80vh; border-radius: 24px 24px 0 0;
-                border-left: none; border-top: 2px solid #cbb99b; z-index: 30;
+                max-height: 80vh; border-radius: 30px 30px 0 0;
+                border-left: none; border-top: 4px solid #b58a5c; z-index: 30;
                 transition: transform 0.3s ease;
-                transform: translateY(calc(100% - 125px));
-                background: rgba(245, 235, 215, 0.98);
+                transform: translateY(calc(100% - 130px));
+                background: rgba(230, 200, 160, 0.98);
                 backdrop-filter: blur(10px);
                 will-change: transform;
                 touch-action: pan-y;
-                box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
             }
             .info-panel.expanded { transform: translateY(0); max-height: 85vh; }
-            .info-header { padding: 16px 22px 12px; cursor: grab; user-select: none; background: rgba(235, 220, 200, 0.9); border-radius: 24px 24px 0 0; border-bottom: 2px solid #d6bc99; }
-            .info-header::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 50px; height: 5px; background: #b29675; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
-            .info-header h3 { font-size: 1.4rem; padding-top: 8px; }
-            .info-content { max-height: calc(85vh - 125px); overflow-y: auto; padding: 16px 22px 22px; }
+            .info-header { padding: 18px 22px 12px; cursor: grab; user-select: none; background: rgba(200, 160, 120, 0.9); border-radius: 30px 30px 0 0; }
+            .info-header::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 60px; height: 6px; background: #9e6b3e; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+            .info-header h3 { font-size: 1.5rem; padding-top: 10px; }
+            .info-content { max-height: calc(85vh - 130px); overflow-y: auto; padding: 16px 22px 22px; }
             .footer-note { display: none; }
-            .swipe-indicator { display: block; text-align: center; font-family: 'Caveat', cursive; font-size: 0.9rem; color: #8b6f50; margin-top: 4px; }
+            .swipe-indicator { display: block; text-align: center; font-family: 'Caveat', cursive; font-size: 1rem; color: #6b4f34; margin-top: 4px; }
         }
         @media (max-width: 600px) {
-            .info-panel { transform: translateY(calc(100% - 110px)); }
-            .info-header h3 { font-size: 1.2rem; }
-        }
-        /* Мотивирующие звёзды */
-        .stars-display {
-            margin: 1.5rem 0;
-            font-size: 2.5rem;
-            letter-spacing: 0.7rem;
-            text-align: center;
-        }
-        .star-filled { color: #FFD700; text-shadow: 0 0 10px #FFA500, 0 0 20px #FFD700; animation: glow 1.5s infinite alternate; }
-        @keyframes glow { from { text-shadow: 0 0 5px #FFD700; } to { text-shadow: 0 0 20px #FFA500, 0 0 30px #FFD700; } }
-        .star-empty { color: #aaa; text-shadow: 0 0 5px #666; }
-        .encouragement-message {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
-            margin: 1rem 0 1.5rem;
-            color: #9e2b2b;
-            text-align: center;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            .info-panel { transform: translateY(calc(100% - 115px)); }
+            .info-header h3 { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -530,7 +517,7 @@
     <div class="book">
         <div class="header">
             <h1>По следам Порфирия Крылова <span>и Кукрыниксов</span></h1>
-            <p>три тульских музея, где оживают плакаты войны</p>
+            <p>три тульских музея, где плакаты рассказывают войну</p>
         </div>
         <div class="main">
             <!-- Левая панель: список музеев -->
@@ -542,7 +529,7 @@
             <div class="map-container">
                 <div id="map"></div>
             </div>
-            <!-- Правая панель: информация о музее -->
+            <!-- Правая панель: информация о музее + интересные факты -->
             <div class="info-panel" id="info-panel">
                 <div class="info-header" id="info-header">
                     <h3 id="info-title">Музей Обороны Тулы</h3>
@@ -565,8 +552,8 @@
 
     <script>
         // ==================== ДАННЫЕ О МУЗЕЯХ ====================
-        const IMAGE_PATH = './assets/posters_by_year/';
-        const AUDIO_PATH = './audio/'; // для демо, замените на реальные файлы
+        const IMAGE_PATH = './assets/posters_by_year/';  // путь к вашим плакатам
+        const AUDIO_PATH = './audio/';                   // папка с аудио (создайте и добавьте файлы)
 
         const places = [
             {
@@ -574,8 +561,10 @@
                 name: 'Музей Обороны Тулы',
                 coords: [54.188186, 37.658958],
                 description: 'Рязанская ул., 25/4',
-                fullText: `Музей Обороны Тулы хранит память о героической обороне города осенью 1941 года. Здесь, среди оружия и документов, висит плакат, с которого началась война для миллионов советских людей. «Беспощадно разгромим и уничтожим врага!» — этот образ, созданный Кукрыниксами в первый же день войны, стал символом сопротивления. На плакате Гитлер разрывает пакт о ненападении, а красноармеец пронзает его штыком. Тираж плаката был огромен, его расклеивали на улицах, вокзалах, заводах. Он поднимал боевой дух, звал на защиту Родины. Сегодня мы можем увидеть его в этом музее — как напоминание о том, что враг будет разбит, победа будет за нами.`,
-                audio: 'audio/1.mp3', // заглушка
+                fullText: `Музей Обороны Тулы — место, где оживает история героической обороны города осенью 1941 года. Здесь, среди оружия и документов, представлен плакат, с которого началась война для миллионов советских людей. «Беспощадно разгромим и уничтожим врага!» — этот образ, созданный Кукрыниксами в первый же день войны, стал символом сопротивления. На плакате Гитлер разрывает пакт о ненападении, а красноармеец пронзает его штыком. Тираж был огромен — плакат расклеивали на улицах, вокзалах, заводах. Он поднимал боевой дух и звал на защиту Родины.\n\n` +
+                `<span class="interesting-fact">✨ Интересный факт: этот плакат вышел уже 24 июня 1941 года, всего через два дня после начала войны. Художники работали всю ночь, а утром трафаретчики уже размножали его вручную.</span>\n\n` +
+                `Сегодня мы можем увидеть его в этом музее — как напоминание о том, что враг будет разбит, победа будет за нами.`,
+                audio: AUDIO_PATH + '1.mp3', // замените на реальный файл
                 images: [`${IMAGE_PATH}1.jpg`],
                 imageCaptions: ['Плакат «Беспощадно разгромим и уничтожим врага!», 1941']
             },
@@ -584,8 +573,10 @@
                 name: 'Тульский военно-исторический музей',
                 coords: [54.195832, 37.619643],
                 description: 'Менделеевская ул., 12В',
-                fullText: `В этом музее, расположенном в самом сердце Тулы, хранится уникальный плакат «Непрочные вещи – Немецкие клещи», созданный Кукрыниксами в соавторстве с поэтом В.П. Катаевым (Окно ТАСС №323). Плакат высмеивает хвалёные немецкие «клещи» — так называемые операции по окружению советских войск. На рисунке огромные красные клещи сжимают тонкую немецкую фигурку, а вокруг рассыпаются сломанные «клещики» поменьше. Надпись гласит: «Непрочные вещи – Немецкие клещи». Это остроумный ответ на пропаганду вермахта, который обещал быстрые победы. Плакат появился в 1941 году, когда враг уже убедился, что блицкриг провалился. Он вселял веру в то, что советские войска не только обороняются, но и готовят сокрушительный удар.`,
-                audio: 'audio/2.mp3',
+                fullText: `В этом музее, расположенном в самом сердце Тулы, хранится уникальный плакат «Непрочные вещи – Немецкие клещи», созданный Кукрыниксами в соавторстве с поэтом В.П. Катаевым (Окно ТАСС №323). Плакат высмеивает хвалёные немецкие «клещи» — так называемые операции по окружению советских войск. На рисунке огромные красные клещи сжимают тонкую немецкую фигурку, а вокруг рассыпаются сломанные «клещики» поменьше. Надпись гласит: «Непрочные вещи – Немецкие клещи».\n\n` +
+                `<span class="interesting-fact">✨ Интересный факт: плакат появился в конце 1941 года, когда вермахт уже убедился, что блицкриг провалился. «Клещи» стали символом неудач немцев под Москвой и Тихвином.</span>\n\n` +
+                `Это остроумный ответ на пропаганду врага, обещавшего быстрые победы. Плакат вселял веру в то, что советские войска не только обороняются, но и готовят сокрушительный удар.`,
+                audio: AUDIO_PATH + '2.mp3',
                 images: [`${IMAGE_PATH}119.jpg`],
                 imageCaptions: ['Плакат «Непрочные вещи – Немецкие клещи», 1941']
             },
@@ -594,8 +585,16 @@
                 name: 'Музей Порфирия Никитича Крылова',
                 coords: [54.209689, 37.669130],
                 description: 'ул. Кутузова, 10',
-                fullText: `Музей, посвящённый народному художнику СССР Порфирию Никитичу Крылову — одному из трёх знаменитых Кукрыниксов. Здесь собрана богатая коллекция его работ, в том числе военные плакаты, созданные вместе с товарищами. Каждый плакат — это отклик на события, зачастую созданный за одну ночь и размноженный через трафареты. «Против молодца – сам овца» (1941) высмеивает трусливого фрица, «Два котла» (1941) — намёк на успешные окружения немцев под Смоленском и Ельней. «Юный фриц» (1941) обличает нацистское воспитание. «Гитлериада» (1942) — серия карикатур на фюрера. «Крыловская мартышка о Геббельсе» (1942) — басня о лживой пропаганде. «Расплата» (1943), «За страну советскую, за веру немецкую» (1943), «Убей его!» (1943), «Три года войны» (1944) — эти плакаты вели к Победе. В музее можно увидеть оригиналы, эскизы, личные вещи художника.`,
-                audio: 'audio/3.mp3',
+                fullText: `Музей, посвящённый народному художнику СССР Порфирию Никитичу Крылову — одному из трёх знаменитых Кукрыниксов. Здесь собрана богатейшая коллекция его работ, в том числе военные плакаты, созданные вместе с товарищами. Каждый плакат — это отклик на события, зачастую созданный за одну ночь и размноженный через трафареты.\n\n` +
+                `• «Против молодца – сам овца» (1941) высмеивает трусливого фрица.\n` +
+                `• «Два котла» (1941) — намёк на успешные окружения немцев под Смоленском и Ельней.\n` +
+                `• «Юный фриц» (1941) обличает нацистское воспитание.\n` +
+                `• «Гитлериада» (1942) — серия карикатур на фюрера.\n` +
+                `• «Крыловская мартышка о Геббельсе» (1942) — басня о лживой пропаганде.\n` +
+                `• «Расплата» (1943), «За страну советскую, за веру немецкую» (1943), «Убей его!» (1943), «Три года войны» (Окно ТАСС, 1944).\n\n` +
+                `<span class="interesting-fact">✨ Интересный факт: все плакаты «Окон ТАСС» раскрашивались вручную по трафаретам — за ночь делали до 20 копий. Иногда художники работали прямо в цехах, где печатали листовки для фронта.</span>\n\n` +
+                `В музее можно увидеть оригиналы, эскизы, личные вещи художника — и почувствовать ту невероятную энергию, с которой ковалась победа.`,
+                audio: AUDIO_PATH + '3.mp3',
                 images: [
                     `${IMAGE_PATH}1.jpg`,
                     `${IMAGE_PATH}117.jpg`,
@@ -719,11 +718,9 @@
         function initMap() {
             map = L.map('map').setView([54.195, 37.62], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors',
-                className: 'map-sepia' // для фильтра sepia через CSS
+                attribution: '&copy; OpenStreetMap'
             }).addTo(map);
-            // Добавляем сепию через CSS
-            document.querySelector('#map').style.filter = 'sepia(0.2) contrast(0.95)';
+            // сепия уже в CSS
 
             places.forEach(place => {
                 const marker = L.marker(place.coords, {
@@ -842,7 +839,7 @@
                 }
                 function setPanelTransform(y) {
                     const panelHeight = infoPanel.offsetHeight;
-                    const headerHeight = 120;
+                    const headerHeight = 130; // должно совпадать со значением в CSS
                     const minY = 0;
                     const maxY = panelHeight - headerHeight;
                     y = Math.max(minY, Math.min(maxY, y));
@@ -854,7 +851,7 @@
                     isDragging = false;
                     infoPanel.classList.remove('dragging');
                     const panelHeight = infoPanel.offsetHeight;
-                    const headerHeight = 120;
+                    const headerHeight = 130;
                     const threshold = panelHeight * 0.2;
                     if (currentTransform < threshold) {
                         infoPanel.classList.add('expanded');
@@ -888,7 +885,7 @@
                 infoHeader.addEventListener('click', function(e) {
                     if (infoPanel.classList.contains('dragging')) return;
                     const panelHeight = infoPanel.offsetHeight;
-                    const headerHeight = 120;
+                    const headerHeight = 130;
                     if (infoPanel.classList.contains('expanded')) {
                         infoPanel.classList.remove('expanded');
                         infoPanel.style.transform = `translateY(${panelHeight - headerHeight}px)`;
@@ -903,7 +900,7 @@
                     if (sidebar) sidebar.classList.remove('expanded');
                     if (infoPanel.classList.contains('expanded')) {
                         const panelHeight = infoPanel.offsetHeight;
-                        const headerHeight = 120;
+                        const headerHeight = 130;
                         infoPanel.classList.remove('expanded');
                         infoPanel.style.transform = `translateY(${panelHeight - headerHeight}px)`;
                     }
@@ -912,12 +909,34 @@
                 // Инициализация свёрнутого состояния
                 setTimeout(() => {
                     const panelHeight = infoPanel.offsetHeight;
-                    const headerHeight = 120;
+                    const headerHeight = 130;
                     infoPanel.style.transform = `translateY(${panelHeight - headerHeight}px)`;
                     infoPanel.classList.remove('expanded');
                 }, 100);
             }
         });
+
+        // ==================== МОТИВАЦИОННЫЙ БЛОК (ПОКАЗЫВАЕТСЯ ПОСЛЕ ТРЕТЬЕГО ПРОСЛУШИВАНИЯ) ====================
+        let visitedCount = 0;
+        const originalShowInfo = showInfo;
+        showInfo = function(place) {
+            originalShowInfo(place);
+            visitedCount++;
+            if (visitedCount === 3) {
+                setTimeout(() => {
+                    const content = document.getElementById('info-content');
+                    const starsDiv = document.createElement('div');
+                    starsDiv.className = 'stars-motivation';
+                    starsDiv.innerHTML = `
+                        <div class="stars-row">
+                            <span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span>
+                        </div>
+                        <div class="motivation-text">Вы прошли весь маршрут!<br>Плакаты Кукрыниксов - живая история Победы.</div>
+                    `;
+                    content.appendChild(starsDiv);
+                }, 500);
+            }
+        };
     </script>
 </body>
 </html>
